@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: pr-previews
+  namespace: argocd
+spec:
+  generators:
+  - pullRequest:
+      github:
+        owner: YOUR_GH_OWNER
+        repo: YOUR_GH_REPO
+        tokenRef:
+          secretName: github-token
+          key: token
+      requeueAfterSeconds: 60
+  template:
+    metadata:
+      name: "pr-{{ number }}"
+    spec:
+      project: default
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "pr-{{ number }}"
+      source:
+        repoURL: https://github.com/YOUR_GH_OWNER/YOUR_GH_REPO.git
+        targetRevision: "{{ head_sha }}"
+        path: deploy/overlays/pr
+        kustomize:
+          # This lets us substitute placeholders
+          # ArgoCD will replace {{ number }} in namespace and image
+          namePrefix: ""
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

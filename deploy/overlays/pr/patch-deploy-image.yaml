@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-app
+spec:
+  template:
+    spec:
+      containers:
+      - name: node
+        image: node-app:pr-{{ number }}
+        imagePullPolicy: IfNotPresent
