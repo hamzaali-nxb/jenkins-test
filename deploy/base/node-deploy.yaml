@@ -18,11 +18,8 @@ spec:
       - name: node
         image: node-app:latest
         imagePullPolicy: IfNotPresent
-        env:
-        - name: DATABASE_URL
-          valueFrom:
-            secretKeyRef:
-              name: db-secret
-              key: DATABASE_URL
+        env: 
+          - name: DATABASE_URL 
+            value: postgres://postgres:postgres@postgres:5432/postgres 
         ports:
         - containerPort: 3000

@@ -17,6 +17,7 @@ jobs:
       - name: Apply Manifests
         run: |
           kubectl create ns $NAMESPACE
+          kubectl get ns
           kustomize build overlays/pr | kubectl apply -n $NAMESPACE -f -
 
   cleanup:

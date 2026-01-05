@@ -22,7 +22,7 @@ spec:
       project: default
       destination:
         server: https://kubernetes.default.svc
-        namespace: "pr-11"
+        namespace: "pr-{{ number }}"
       source:
         repoURL: https://github.com/hamzaali-nxb/jenkins-test.git
         targetRevision: "{{ head_sha }}"
