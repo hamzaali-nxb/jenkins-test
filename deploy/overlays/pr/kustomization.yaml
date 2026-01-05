@@ -1,11 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: pr-{{ number }}
+namespace: "pr-{{ number }}"
 resources:
-  - ../../base
+  - ../base
   - namespace.yaml
 patches:
-  - path: patch-deploy-image.yaml 
-    target: 
+  - path: patch-deploy-image.yaml
+    target:
       kind: Deployment
       name: node-app
