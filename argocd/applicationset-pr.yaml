@@ -7,8 +7,10 @@ spec:
   generators:
   - pullRequest:
       github:
-        owner: YOUR_GH_OWNER
-        repo: YOUR_GH_REPO
+        owner: hamzaali-nxb
+        repo: jenkins-test
+        # repoURL: https://github.com/hamzaali-nxb/jenkins-test.git
+
         tokenRef:
           secretName: github-token
           key: token
@@ -22,7 +24,7 @@ spec:
         server: https://kubernetes.default.svc
         namespace: "pr-{{ number }}"
       source:
-        repoURL: https://github.com/YOUR_GH_OWNER/YOUR_GH_REPO.git
+        repoURL: https://github.com/hamzaali-nxb/jenkins-test.git
         targetRevision: "{{ head_sha }}"
         path: deploy/overlays/pr
         kustomize:
