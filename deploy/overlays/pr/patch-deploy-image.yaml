@@ -7,5 +7,5 @@ spec:
     spec:
       containers:
       - name: node
-        image: node-app:pr-{{ number }}
+        image: node-app:pr-123
         imagePullPolicy: IfNotPresent
