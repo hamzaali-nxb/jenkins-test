@@ -1,0 +1,27 @@
+name: PR Preview
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+jobs:
+  deploy:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set Namespace
+        run: echo "NAMESPACE=pr-${{ github.event.number }}" >> $GITHUB_ENV
+
+      - name: Apply Manifests
+        run: |
+          kubectl create ns $NAMESPACE
+          kustomize build overlays/pr | kubectl apply -n $NAMESPACE -f -
+
+  cleanup:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete Namespace
+        run: kubectl delete ns pr-${{ github.event.number }}
